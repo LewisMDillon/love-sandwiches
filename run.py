@@ -77,7 +77,7 @@ def calculate_surplus_data(sales_row):
     print("Calculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    
+
     surplus_data = []
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
@@ -118,6 +118,18 @@ def calculate_stock_data(data):
     return new_stock_data
 
 
+def get_stock_values(data):
+    """
+    Gets heading values from sales worksheet
+    """
+    sales_sheet_data = SHEET.worksheet('sales').get_all_values()
+    headings = sales_sheet_data[0]
+
+    dictionary = dict.fromkeys(headings, data)
+
+    print(dictionary)
+
+
 def main():
     """
     Run all program functions
@@ -130,6 +142,7 @@ def main():
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_columns)
     update_worksheet(stock_data, "stock")
+    get_stock_values(data)
 
 
 print("Welcome to Love Sandwiches Data Automation")
